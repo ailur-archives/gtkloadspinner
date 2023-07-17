@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <string.h>
+#include <unistd.h>
 
 gboolean on_timeout(gpointer data) {
   gtk_widget_queue_draw(GTK_WIDGET(data));
@@ -16,9 +17,10 @@ gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer data) {
 }
 
 void show_help() {
-  g_print("Usage: loadspinner [TEXT] [FONTSIZE]\n");
+  g_print("Usage: loadspinner [TEXT] [FONTSIZE] [WAIT_TIME]\n");
   g_print("TEXT: The text to display in the label.\n");
   g_print("FONTSIZE: The font size of the label.\n");
+  g_print("WAIT_TIME: The wait time in milliseconds before showing the window.\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -27,7 +29,7 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  if (argc != 3) {
+  if (argc != 4) {
     g_print("Error: Invalid number of arguments.\n");
     g_print("Use './program_name --help' for usage information.\n");
     return 1;
@@ -40,6 +42,9 @@ int main(int argc, char *argv[]) {
   guint timeout_id;
 
   gtk_init(&argc, &argv);
+
+  unsigned int waitTime = atoi(argv[3]);
+  usleep(waitTime * 1000);
 
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
