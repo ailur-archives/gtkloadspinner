@@ -1,2 +1,5 @@
 # GtkLoadSpinner
-Just a cool GTK loading Spinner you can use if you want
+
+Ridonculously simple spinner you can use if you want.
+
+That's it. Literally.
